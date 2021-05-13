@@ -25,20 +25,20 @@ bot.on('message', (msg) => {
 
 function callCoVacc(){
   
-  let district_id=389;
+
   const today = moment();
   const nextday = moment().add(1,'d');
   myFunc(389,today)
   myFunc(389,nextday)
-  myFunc(392,today)
-  myFunc(392,nextday)
+  //myFunc(392,today)
+  //myFunc(392,nextday)
   //bot.sendMessage('@anivaccapp',  'app started');
 }
 
 
 function myFunc(district_id,day) {
  console.log('in my function')
-  const today = moment();
+
   console.log(day.format('DD-MM-YYYY'));
  got.get('https://cdn-api.co-vin.in/api/v2/appointment/sessions/public/findByDistrict?district_id='+district_id+'&date='+day.format('DD-MM-YYYY'), {responseType: 'json'})
  .then(res => {
@@ -51,12 +51,14 @@ function myFunc(district_id,day) {
    centers.forEach(function(data, index) {
      let vaccdata='name : '+data.name+"\n"
      +'address: '+data.address+"\n"
+     +'age: '+data.min_age_limit+"\n"
      +'capacity: '+data.available_capacity+"\n"
      +'fee: '+data.fee+"\n"
      +'vaccine: '+data.vaccine+"\n"
      +'slots: '+data.slots+"\n"
      +"date: "+ data.date+"\n"
-     +'register at https://selfregistration.cowin.gov.in/'
+     +"Pin Code: "+ data.pincode+"\n"
+     +'register at \n https://selfregistration.cowin.gov.in/ \n or register using UMANG app on mobile as it gives you option to book for current week'
        bot.sendMessage('@anivaccapp', vaccdata );
        })
   
